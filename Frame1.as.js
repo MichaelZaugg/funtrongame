@@ -1140,14 +1140,14 @@ function processInput1()
                     "LS / DIR^^" +
                     "CD^^" +
                     "READ^^" +
-                   // "HINT^^" +
+                    "HINT^^" +
                     "LOGOUT^^";
             break;
         
-       // case "HINT":
-        //    gladosMessage =
+        case "HINT":
+            gladosMessage =
                     "^^The user: Dillinger, is the owner of the MCP.^^";
-         //   break;
+            break;
 
         case "LOGOUT":
         case "BYE":
@@ -1265,8 +1265,8 @@ qar[4] =
   "^^ENCOM SYSTEMS SERVER ARCHIVE v1982.MCPDEV-001" +
   "^^Property of Encom (c) 1982" +
   "^^" +
-  "MCP: 1/8/2026 at 2:45PM MST, Unnauthorized user gained access to restricted sectors. However, they passed on the prize to whoever wins next." +
-  //"^^Hint: To LOGIN, FLYNN, CLU" +
+  "^^MCP: 1/8/2026 at 3:48PM MST, Unnauthorized user has gained access to restricted sectors and won the game. End of Line. (A player won at 2:45PM but gave the prize to the next person)" +
+  "^^Hint: To LOGIN, FLYNN, CLU" +
   "^^" +
   "^^> ";
 

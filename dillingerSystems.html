@@ -364,6 +364,7 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
         'DATE                 Show local time',
         'ECHO <text>           Print text',
         'DIR / LS              List directory contents',
+        'HINT1, HINT2, HINT3',
         'CD <ROOT|LOGS|USERS>   Change directory',
         'OPEN <file>            Display a file (README.TXT, POLICY.TXT, etc.)'
       ].join('\n');
@@ -460,6 +461,18 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
           } else {
             print(openFile(parts[1]));
           }
+          break;
+
+        case 'HINT1':
+            print('What did Sam Flynn do when he found his fathers computer? Is there some code someone used?');
+          break;
+
+        case 'HINT2':
+            print('SometimesSpaceTransmitsVideo');
+          break;
+
+        case 'HINT3':
+            print('The horse\'s name is steg. OR look in the trash for Encom.');
           break;
 
         case 'RUN': {
