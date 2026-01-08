@@ -1134,6 +1134,13 @@ function processInput1()
         case "HOME":
             home();
             return undefined;
+        case "HELP":
+            gladosMessage =
+                    "LS / DIR" +
+                    "CD" +
+                    "READ" +
+                    "RUN" +
+                    "LOGOUT";
 
         case "LOGOUT":
         case "BYE":
