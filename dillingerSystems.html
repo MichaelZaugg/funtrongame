@@ -341,7 +341,7 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
       if(base.startsWith('ERROR')) return base;
 
       // intentionally "odd" line count + formatting to look like corruption
-      const hiddenName = '.' + ['ecnom','payload','trash'].join('_');
+      const hiddenName = '.' + ['encom','payload','trash'].join('_');
       const hiddenLine = `  I  001  ${hiddenName}`;
       return base + '\n' + hiddenLine;
     }
@@ -470,7 +470,6 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
         case 'HINT2':
             print('SometimesSpaceTransmitsVideo');
           break;
-
         case 'HINT3':
             print('The horse\'s name is steg. OR look in the trash for Encom.');
           break;
