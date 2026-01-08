@@ -1139,7 +1139,6 @@ function processInput1()
                     "LS / DIR" +
                     "CD" +
                     "READ" +
-                    "RUN" +
                     "LOGOUT";
 
         case "LOGOUT":
