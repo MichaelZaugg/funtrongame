@@ -144,7 +144,6 @@ function thecakeisalie()
     par[4] = "SESSION TRAFFIC IS BEING RECORDED.";
     par[5] = "DO NOT EXECUTE UNVERIFIED BINARIES.";
     par[6] = "RUNNING MCP MAY INITIATE FORCED TRANSFER.";
-    par[7] = "CHECK SECURITY FEED:";
     par[8] = " ";
     par[9] = " ";
     par[10] = " ";
@@ -789,8 +788,8 @@ function processInput1()
                         gladosMessage =
                             "^^READMETXT^^" +
                             "ENCOM INTERNAL PROJECT ARCHIVE^^" +
-                            "TIMEFRAME: PRE-EXEC RESTRUCTURE^^" +
-                            "NOTE: PROJECT PARTITIONS MAY BE RESTRICTED BY EXEC SECURITY.^^";
+                            "TIMEFRAME: 1982^^" +
+                            "NOTE: PROJECT PARTITIONS MAY BE RESTRICTED.^^";
                     }
                     else if(fn == "READMETXT" && currentPath == "TRON")
                     {
@@ -798,7 +797,7 @@ function processInput1()
                             "^^READMETXT^^" +
                             "PROJECT: TRON (SECURITY PROGRAM)^^" +
                             "OWNER: ALAN BRADLEY^^" +
-                            "PURPOSE: COMMUNICATIONS MONITOR + INTRUSION RESPONSE^^" +
+                            "PURPOSE: COMMUNICATIONS MONITOR + WATCHDOG FOR THE MCP^^" +
                             "STATUS: READY FOR CONTROLLED DEPLOYMENT (PENDING APPROVAL).^^";
                     }
                     else if(fn == "DEPLOYMENTDOC" && currentPath == "TRON")
@@ -808,8 +807,7 @@ function processInput1()
                             "TRON DEPLOYMENT NOTES (DRAFT)^^" +
                             "1) REQUEST KERNEL HOOKS FROM OPS^^" +
                             "2) LIMIT VISIBILITY TO EXEC-SEC PARTITION^^" +
-                            "3) LOG ALL MCP INTERFERENCE^^" +
-                            "NOTE: MCP MAY ATTEMPT TO REVOKE PROCESS RIGHTS.^^";
+                            "3) LOG ALL MCP INTERFERENCE^^";
                     }
                     else if(fn == "CHANGELOGTXT" && currentPath == "TRON")
                     {
@@ -953,8 +951,7 @@ function processInput1()
                         gladosMessage =
                             "^^COMPANYOVERVIEWTXT^^" +
                             "ENCOM CORPORATE ARCHIVE (EXCERPT)^^" +
-                            "ENCOM OPERATES LARGE-SCALE MAINFRAME SYSTEMS AND SOFTWARE DIVISIONS.^^" +
-                            "NOTE: THIS ARCHIVE SNAPSHOT IS FROM THE PERIOD BEFORE EXEC RESTRUCTURE.^^";
+                            "ENCOM OPERATES LARGE-SCALE MAINFRAME SYSTEMS AND SOFTWARE DIVISIONS.^^";
                     }
                     else if(fn == "ORGCHARTTXT" && currentPath == "FILES")
                     {
@@ -983,7 +980,7 @@ function processInput1()
                             "TAPE-01: SYSTEMS BACKUP^^" +
                             "TAPE-02: PROJECTS SNAPSHOT^^" +
                             "TAPE-03: MAIL ARCHIVE^^" +
-                            "NOTE: OFFSITE ACCESS RESTRICTED BY EXEC SECURITY.^^";
+                            "NOTE: OFFSITE ACCESS RESTRICTED BY EXEC SECURITY FROM DILLINGER.^^";
                     }
                     else if(fn == "TERMSGLOSSARYTXT" && currentPath == "FILES")
                     {
@@ -1057,7 +1054,7 @@ function processInput1()
                             "TO: SYSTEMS-OPS^^" +
                             "SUBJ: MCP INTEGRATION^^" +
                             "BODY: PUSH MCP BUILD TO PRODUCTION AFTER HOURS.^^" +
-                            "      ROUTE EXCEPTIONS THROUGH EXEC SECURITY.^^";
+                            "      ROUTE EXCEPTIONS THROUGH ME ONLY. I WANT THIS RUNNING BY MORNING.^^";
                     }
                     else if(fn == "INBOX002EML" && currentPath == "MAIL")
                     {
@@ -1067,7 +1064,7 @@ function processInput1()
                             "TO: ALL TECH STAFF^^" +
                             "SUBJ: UNAUTHORIZED TERMINAL ACTIVITY^^" +
                             "BODY: SESSIONS ARE BEING LOGGED.^^" +
-                            "      DO NOT ATTEMPT TO AUDIT MCP WITHOUT APPROVAL.^^";
+                            "      DO NOT ATTEMPT TO AUDIT MCP WITHOUT APPROVAL. WE WILL SUSPEND GROUP-7 ACCESS IF UNAUTHORIZED USE IS FOUND.^^";
                     }
                     else if(fn == "INBOX003EML" && currentPath == "MAIL")
                     {
