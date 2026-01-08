@@ -1259,6 +1259,8 @@ qar[4] =
   "^^ENCOM SYSTEMS SERVER ARCHIVE v1982.MCPDEV-001" +
   "^^Property of Encom (c) 1982" +
   "^^" +
+  "(This page will update when someone wins)" +
+  "^^" +
   "^^> ";
 
 qar[5] = "";
