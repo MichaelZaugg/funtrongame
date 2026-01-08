@@ -182,7 +182,7 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
         <div class="screen" id="screen"></div>
 
         <div class="promptline">
-          <div class="prompt" id="prompt">DILLINGER:\\ROOT&gt; </div>
+          <div class="prompt" id="prompt">DILLINGER:\ROOT&gt; </div>
           <input class="cmd" id="cmd" autocomplete="off" spellcheck="false" autofocus
                  placeholder="Type HELP for commands…" />
         </div>
@@ -335,6 +335,17 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
       ].join('\n');
     }
 
+    // LS -A hidden listing (kept out of FS so DIR won't show it)
+    function listDirAll(path){
+      const base = listDir(path);
+      if(base.startsWith('ERROR')) return base;
+
+      // intentionally "odd" line count + formatting to look like corruption
+      const hiddenName = '.' + ['ecnom','payload','trash'].join('_');
+      const hiddenLine = `  I  001  ${hiddenName}`;
+      return base + '\n' + hiddenLine;
+    }
+
     function openFile(name){
       const dir = FS[state.path];
       if(!dir) return `ERROR 24 [Directory '${state.path}' not found]`;
@@ -358,6 +369,9 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
       ].join('\n');
     }
 
+    const __rt = ('a'+'t'+'h'+'e'+'n'+'a'+'_'+'c'+'o'+'n'+'t'+'r'+'o'+'l'+'.'+'h'+'t'+'m'+'l');
+    const __hid = ('.' + ['ecnom','payload','trash'].join('_')).toLowerCase();
+
     function run(line){
       const trimmed = (line || '').trim();
       if(!trimmed) return;
@@ -373,7 +387,8 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
 
       const parts = trimmed.split(/\s+/);
       const cmd0 = (parts[0] || '').toUpperCase();
-      const arg = parts.slice(1).join(' ');
+      const argRaw = parts.slice(1).join(' ');
+      const argUp = (argRaw || '').toUpperCase();
 
       switch(cmd0){
         case 'HELP':
@@ -396,13 +411,21 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
           break;
 
         case 'ECHO':
-          print(arg);
+          print(argRaw);
           break;
 
         case 'DIR':
-        case 'LS':
         case 'LIST':
           print(listDir(state.path));
+          break;
+
+        case 'LS':
+          // hidden: LS -A (not shown in HELP)
+          if(argUp === '-A' || argUp === '-AL' || argUp === '-LA'){
+            print(listDirAll(state.path));
+          } else {
+            print(listDir(state.path));
+          }
           break;
 
         case 'CD':
@@ -438,7 +461,24 @@ SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
             print(openFile(parts[1]));
           }
           break;
-        case 'RETURN':
+
+        case 'RUN': {
+          const target = (argRaw || '').trim().toLowerCase();
+          if(!target){
+            print('ERROR 02 [Command requires a parameter]');
+            break;
+          }
+          const normalized = target.startsWith('.') ? target : ('.' + target);
+          if(normalized === __hid){
+            print('LOADING: ' + normalized);
+            print('STATUS: EXECUTION GRANTED (DEGRADED)');
+            print('ROUTE: ATHENA CONTROL INTERFACE');
+            setTimeout(()=>{ window.location.href = __rt; }, 1000);
+          } else {
+            print('ERROR 24 [Program not found]');
+          }
+          break;
+        }
 
         default:
           print("ERROR 24 [Unknown command]");

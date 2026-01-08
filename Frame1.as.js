@@ -1140,8 +1140,14 @@ function processInput1()
                     "LS / DIR^^" +
                     "CD^^" +
                     "READ^^" +
+                   // "HINT^^" +
                     "LOGOUT^^";
             break;
+        
+       // case "HINT":
+        //    gladosMessage =
+                    "^^The user: Dillinger, is the owner of the MCP.^^";
+         //   break;
 
         case "LOGOUT":
         case "BYE":
@@ -1260,6 +1266,7 @@ qar[4] =
   "^^Property of Encom (c) 1982" +
   "^^" +
   "(This page will update when someone wins)" +
+  //"^^Hint: To LOGIN, FLYNN, CLU" +
   "^^" +
   "^^> ";
 
