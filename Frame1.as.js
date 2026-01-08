@@ -1265,7 +1265,7 @@ qar[4] =
   "^^ENCOM SYSTEMS SERVER ARCHIVE v1982.MCPDEV-001" +
   "^^Property of Encom (c) 1982" +
   "^^" +
-  "(This page will update when someone wins)" +
+  "MCP: 1/8/2026 at 2:45PM MST, Unnauthorized user gained access to restricted sectors. However, they passed on the prize to whoever wins next." +
   //"^^Hint: To LOGIN, FLYNN, CLU" +
   "^^" +
   "^^> ";
