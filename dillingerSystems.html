@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DILLINGER SYSTEMS</title>
+  <style>
+    :root{
+      --bg:#000;
+      --fg:#ff1a1a;
+      --fg-dim:#b00000;
+      --border:#ff1a1a;
+      --shadow: 0 0 12px rgba(255,26,26,.25);
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+    a{color:var(--fg)}
+    .wrap{max-width:920px;margin:40px auto;padding:20px}
+    .box{
+      border:1px solid var(--border);
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    /* subtle “modern terminal” polish without changing the vibe */
+    .box::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,26,26,.05),
+          rgba(255,26,26,.05) 1px,
+          rgba(0,0,0,0) 2px,
+          rgba(0,0,0,0) 4px
+        );
+      mix-blend-mode: screen;
+      opacity:.35;
+      pointer-events:none;
+    }
+    .box::after{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 20% 10%, rgba(255,26,26,.12), transparent 55%),
+                  radial-gradient(circle at 90% 40%, rgba(255,26,26,.08), transparent 60%);
+      pointer-events:none;
+    }
+    .header{
+      position:relative;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .who{
+      color: var(--fg-dim);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:12px;
+      margin:0;
+    }
+    .banner{
+      position:relative;
+      margin:10px 0 14px 0;
+      white-space:pre;
+      line-height:1.05;
+      font-size:14px;
+      user-select:none;
+      text-shadow: 0 0 10px rgba(255,26,26,.22);
+    }
+    .divider{
+      position:relative;
+      border-top:1px dashed rgba(255,26,26,.55);
+      margin:10px 0 14px 0;
+    }
+    .status{
+      position:relative;
+      white-space:pre-wrap;
+      margin:0 0 14px 0;
+      color:rgba(255,26,26,.9);
+    }
+
+    /* terminal */
+    .terminal{
+      position:relative;
+      border:1px solid rgba(255,26,26,.65);
+      padding:12px;
+      background: rgba(0,0,0,.65);
+      box-shadow: inset 0 0 0 1px rgba(255,26,26,.08);
+      border-radius:8px;
+    }
+    .screen{
+      min-height:260px;
+      max-height:420px;
+      overflow:auto;
+      padding-right:6px;
+      white-space:pre-wrap;
+      line-height:1.35;
+      font-size:14px;
+    }
+    .screen::-webkit-scrollbar{width:10px}
+    .screen::-webkit-scrollbar-thumb{background:rgba(255,26,26,.25); border:2px solid rgba(0,0,0,.8); border-radius:12px}
+    .screen::-webkit-scrollbar-track{background:rgba(0,0,0,.2)}
+    .promptline{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(255,26,26,.35);
+    }
+    .prompt{
+      white-space:pre;
+      color: rgba(255,26,26,.95);
+      flex:0 0 auto;
+    }
+    .cmd{
+      flex:1 1 auto;
+      min-width: 200px;
+      background:transparent;
+      border:0;
+      outline:none;
+      color:var(--fg);
+      font: inherit;
+      caret-color: var(--fg);
+      padding:0;
+    }
+    .hint{
+      margin-top:8px;
+      color: rgba(255,26,26,.55);
+      font-size:12px;
+      letter-spacing:.02em;
+    }
+    .links{
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+      font-size:13px;
+      color: rgba(255,26,26,.75);
+    }
+    .links a{ text-decoration:none; border-bottom:1px dotted rgba(255,26,26,.65) }
+    .links a:hover{ border-bottom-style:solid }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="box">
+      <div class="header">
+        <p class="who" id="who">SUBJECT: USER</p>
+        <p class="who" id="session">SESSION: —</p>
+      </div>
+
+      <pre class="banner" aria-label="Dillinger Systems banner">
+██████╗ ██╗██╗     ██╗     ██╗███╗   ██╗ ██████╗ ███████╗██████╗
+██╔══██╗██║██║     ██║     ██║████╗  ██║██╔════╝ ██╔════╝██╔══██╗
+██║  ██║██║██║     ██║     ██║██╔██╗ ██║██║  ███╗█████╗  ██████╔╝
+██║  ██║██║██║     ██║     ██║██║╚██╗██║██║   ██║██╔══╝  ██╔══██╗
+██████╔╝██║███████╗███████╗██║██║ ╚████║╚██████╔╝███████╗██║  ██║
+╚═════╝ ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+      </pre>
+
+      <p class="status">
+TRANSFER COMPLETE FROM ENCOM v1982MCPDEV-001
+ACCESS LEVEL: OPEN
+SESSION IS NOW TRANSFERED TO DILLINGER CONTROL
+      </p>
+
+      <div class="terminal" role="region" aria-label="Dillinger terminal">
+        <div class="screen" id="screen"></div>
+
+        <div class="promptline">
+          <div class="prompt" id="prompt">DILLINGER:\\ROOT&gt; </div>
+          <input class="cmd" id="cmd" autocomplete="off" spellcheck="false" autofocus
+                 placeholder="Type HELP for commands…" />
+        </div>
+
+        <div class="hint">Tip: try <b>DIR</b>, <b>CD LOGS</b>, <b>OPEN POLICY.TXT</b>, <b>CLEAR</b>.</div>
+      </div>
+
+      <div class="links">
+        <div>PARTITION LINK: <a href="dillingerSystems.html" id="backLink">RETURN TO HOME</a></div>
+        <div>SECURITY: <span style="color:rgba(255,26,26,.85)">MONITORING ACTIVE</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Identity
+    // -----------------------------
+    const qs = new URLSearchParams(location.search);
+    const user = "Dillinger";
+    const sessionId = Math.random().toString(16).slice(2, 10).toUpperCase();
+
+    document.getElementById('who').textContent = 'SUBJECT: ' + user;
+    document.getElementById('session').textContent = 'SESSION: ' + sessionId;
+
+    // keep the ENCOM return link “remembering” who is logged in
+    const back = document.getElementById('backLink');
+    back.href = 'dillingerSystems.html';
+
+    // -----------------------------
+    // Dillinger shell
+    // -----------------------------
+    const screen = document.getElementById('screen');
+    const cmd = document.getElementById('cmd');
+    const promptEl = document.getElementById('prompt');
+
+    const state = {
+      user,
+      path: 'ROOT',
+      last: '',
+      history: [],
+      hpos: 0
+    };
+
+    const FS = {
+      ROOT: {
+        'README.TXT': [
+          'DILLINGER SYSTEMS PARTITION',
+          'ACCESS: RESTRICTED',
+          'NOTICE: THIS CONSOLE IS LOGGED AND SUBJECT TO EXEC REVIEW.',
+          '',
+          'Type HELP for available commands.'
+        ].join('\n'),
+        '<DIR> USERS': [
+          '',
+        ].join('\n'),
+        '<DIR> LOGS': [
+          '',
+        ].join('\n'),
+        'POLICY.TXT': [
+          'EXEC POLICY NOTICE',
+          '------------------',
+          '• Nonstandard processes may be terminated without notice.',
+          '• All sessions are recorded.',
+          '• Attempted privilege escalation is a terminable offense.',
+          '',
+          'MCP DIRECTIVE: MAINTAIN SYSTEM CONTROL.'
+        ].join('\n')
+      },
+      LOGS: {
+        'NewSystemMCPCreated.LOG': [
+          'Date: 4-10-1995',
+          'Author: Ed Dillinger',
+          'Program Name: Zeus',
+          'Directive: Master Control',
+          'Objective: You were created from what is left of the MCP in Encom. You are to preserve this system until the time comes. You are to wait for my grandson, Julian for any further directive. When that time comes, reconstitute him as Sark.',
+          'LAST EVENT: "MCP-Zues: I am Zues, Master Control. Objective understood Mr. Dillinger."'
+        ].join('\n'),
+        'SystemEmergencyBackupInitiated.LOG': [
+          'Date: 9-22-1982',
+          'Reason: MCP low-level automated emergency backup initiated.',
+          'Programs: MCP, Sark (Corrupt)',
+          'Situation: Unauthroized access to MCP core by the program TRON and user Kevin Flynn.',
+          'EMERGENCY REQUEST to Dillinger Systems: Immediate backup and archive of MCP and recovery of Sark',
+          'LAST EVENT: "DILLINGER SYSTEMS ARCHIVE: GRANTED....TRANSFER_COMPLETE"'
+        ].join('\n'),
+        'MCPMONITOR.LOG': [
+          'MCP MONITOR (ABBREV)',
+          'UTILIZATION: 99%+',
+          'PARTITION CLAIMS: INCREASING',
+          'POLICY DIRECTIVES: ACTIVE',
+          'LAST EVENT: "TRANSFER_COMPLETE"'
+        ].join('\n'),
+        'SESSION.TRACE': [
+          'SESSION TRACE',
+          '-------------',
+          '00:14 AUTH FAIL  USER=?  SRC=TERM-12',
+          '00:16 SESSION OPEN USER=' + user + '  SRC=TERM-12',
+          '00:17 ACL CHANGE  SCOPE=SCI_DIV  AUTH=EXEC',
+          '00:21 PROCESS SPAWN MCP.SUBSYS  PERM=ELEV'
+        ].join('\n')
+      },
+      USERS: {
+        'DILLINGER.TXT': [
+          'ED DILLINGER',
+          'ROLE: Dillinger Systems CEO',
+          'STATUS: ERROR',
+          'LAST COMMAND RECEIVED: "MCP-Zeus: Initiate file transfer 0245a0D"',
+          'NOTES: User'
+        ].join('\n'),
+        'ACCESSRIGHTS.TXT': [
+          'ACL SUMMARY',
+          '-----------',
+          'ROOT: EXEC-SEC ONLY',
+          'LOGS: READ-ONLY',
+          'USERS: READ-ONLY',
+          'SYSTEM: NO ACCESS'
+        ].join('\n')
+      }
+    };
+
+    function setPrompt(){
+      promptEl.textContent = `DILLINGER:\\${state.path}> `;
+    }
+
+    function print(line = ''){
+      const atBottom = (screen.scrollTop + screen.clientHeight) >= (screen.scrollHeight - 10);
+      screen.textContent += line + '\n';
+      if(atBottom) screen.scrollTop = screen.scrollHeight;
+    }
+
+    function banner(){
+      print('DILLINGER SYSTEMS LIVE ARCHIVE CONSOLE v20.1204');
+      print('(c) 2026 Dillinger Systems');
+      print('');
+      print('Type HELP for commands. Type CLEAR to wipe the screen.');
+      print('');
+      print('MCP-Zeus: Welcome back Mr. Dillinger. I have received an unusual override access request from Encom v1982MCPDEV-001.');
+      print('');
+    }
+
+    function listDir(path){
+      const dir = FS[path];
+      if(!dir) return 'ERROR 24 [Directory not found]';
+      const files = Object.keys(dir).sort();
+      if(files.length === 0) return 'DIRECTORY EMPTY';
+      return [
+        `DIRECTORY OF DILLINGER:${path}`,
+        ...files.map(f => `  I  ${String(dir[f].split('\n').length).padStart(3,'0')}  ${f}`)
+      ].join('\n');
+    }
+
+    function openFile(name){
+      const dir = FS[state.path];
+      if(!dir) return `ERROR 24 [Directory '${state.path}' not found]`;
+      const key = name;
+      if(!(key in dir)) return `ERROR 24 [File '${key}' not found]`;
+      return `^^${key}^^\n` + dir[key];
+    }
+
+    function helpText(){
+      return [
+        'AVAILABLE COMMANDS',
+        '------------------',
+        'HELP                 Show this message',
+        'CLEAR / CLS           Clear the screen',
+        'WHOAMI               Display current subject',
+        'DATE                 Show local time',
+        'ECHO <text>           Print text',
+        'DIR / LS              List directory contents',
+        'CD <ROOT|LOGS|USERS>   Change directory',
+        'OPEN <file>            Display a file (README.TXT, POLICY.TXT, etc.)'
+      ].join('\n');
+    }
+
+    function run(line){
+      const trimmed = (line || '').trim();
+      if(!trimmed) return;
+
+      state.last = trimmed;
+      print(`${promptEl.textContent}${trimmed}`);
+
+      if (trimmed === 'MCP-Zeus: Initiate file transfer 0245a0D') {
+        print('MCP-Zeus: Acknowledged.');
+        window.location.href = 'https://raw.githubusercontent.com/MichaelZaugg/ApertureScienceTerminal/main/security02.flv.mp4'; // or dillingerSystems.html, etc.
+        return;
+      }
+
+      const parts = trimmed.split(/\s+/);
+      const cmd0 = (parts[0] || '').toUpperCase();
+      const arg = parts.slice(1).join(' ');
+
+      switch(cmd0){
+        case 'HELP':
+        case '?':
+          print(helpText());
+          break;
+
+        case 'CLEAR':
+        case 'CLS':
+          screen.textContent = '';
+          break;
+
+        case 'WHOAMI':
+          print('Ed Dillinger');
+          break;
+
+        case 'DATE':
+        case 'TIME':
+          print(new Date().toString());
+          break;
+
+        case 'ECHO':
+          print(arg);
+          break;
+
+        case 'DIR':
+        case 'LS':
+        case 'LIST':
+          print(listDir(state.path));
+          break;
+
+        case 'CD':
+        case 'NAV': {
+          const dest = (parts[1] || '').toUpperCase();
+          if(!dest){
+            print('ERROR 02 [Command requires a parameter]');
+            break;
+          }
+          if(dest === '\\' || dest === 'ROOT'){
+            state.path = 'ROOT';
+            setPrompt();
+            print('OK');
+            break;
+          }
+          if(dest in FS){
+            state.path = dest;
+            setPrompt();
+            print('OK');
+          } else {
+            print('ERROR 24 [Directory not found]');
+          }
+          break;
+        }
+
+        case 'OPEN':
+        case 'TYPE':
+        case 'CAT':
+        case 'READ':
+          if(!parts[1]){
+            print('ERROR 03 [What would you like to open?]');
+          } else {
+            print(openFile(parts[1]));
+          }
+          break;
+        case 'RETURN':
+
+        default:
+          print("ERROR 24 [Unknown command]");
+      }
+
+      print('');
+    }
+
+    // history + enter
+    cmd.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        const v = cmd.value;
+        cmd.value = '';
+        if(v.trim()){
+          state.history.push(v);
+          state.hpos = state.history.length;
+        }
+        run(v);
+      } else if(e.key === 'ArrowUp'){
+        if(state.history.length){
+          state.hpos = Math.max(0, state.hpos - 1);
+          cmd.value = state.history[state.hpos] || '';
+          setTimeout(() => cmd.setSelectionRange(cmd.value.length, cmd.value.length), 0);
+          e.preventDefault();
+        }
+      } else if(e.key === 'ArrowDown'){
+        if(state.history.length){
+          state.hpos = Math.min(state.history.length, state.hpos + 1);
+          cmd.value = state.history[state.hpos] || '';
+          setTimeout(() => cmd.setSelectionRange(cmd.value.length, cmd.value.length), 0);
+          e.preventDefault();
+        }
+      }
+    });
+
+    // boot
+    setPrompt();
+    banner();
+    print(listDir(state.path));
+    print('');
+  </script>
+</body>
+</html>
