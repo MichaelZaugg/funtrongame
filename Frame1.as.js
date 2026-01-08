@@ -1,17 +1,3 @@
-// Frame1.as.js (Readable Refactor + External MCP Chess Launcher)
-// -----------------------------------------------------------------------------
-// This file runs inside the SWF/Flash-emulation runtime used by your project.
-// It expects classic ActionScript-style patterns such as:
-//   - setInterval(target, "methodName", ms)
-//   - target.attachMovie(...)
-//   - getUrl(...)
-//   - TextFormat / NetConnection / NetStream / Key listeners
-//
-// Key change in this version:
-//   - MCP Chess no longer renders inside the terminal (placeText overlaps).
-//   - RUN MCP opens an external HTML page (mcp.html) that renders a real labeled grid.
-//   - The logged in user is passed via query string (?user=ALAN) to keep session context.
-// -----------------------------------------------------------------------------
 
 
 // =============================================================================
@@ -121,7 +107,7 @@ function clearScreen()
 
 
 // =============================================================================
-// 2) Special screens (security feed, notes, bosskey)
+// 2) Special screens
 // =============================================================================
 
 function thecakeisalie()
@@ -211,7 +197,7 @@ function notesdisplay()
 
 
 // =============================================================================
-// 3) Navigation hooks (kept as-is)
+// 3) Navigation hooks
 // =============================================================================
 
 function logout() { getUrl('index.html') }
@@ -552,11 +538,6 @@ var currentPath = "ROOT";
 // External MCP launcher (reliable in this runtime)
 function openMCPPage()
 {
-    // Pass user via querystring so MCP page can display identity
-    // (More reliable than localStorage inside this SWF-style runtime)
-
-    // Open in same tab or new tab:
-    // "_self" keeps it in same tab, "_blank" opens new tab.
     getUrl("chess.html");
 }
 
@@ -605,7 +586,7 @@ function processInput0()
             }
             else
             {
-                ok = true; // show incorrect password banner
+                ok = true; 
             }
             break;
 
@@ -764,10 +745,6 @@ function processInput1()
             else { gladosMessage = "^^ERROR 24 [Directory not found]"; }
             break;
 
-        // OPEN/TYPE/CAT/READ content remains the same as your version.
-        // (To keep this response readable, I left it unchanged.)
-        // Keep your entire existing OPEN block below.
-        // --------------------------------------------------------------------
         case "OPEN":
         case "TYPE":
         case "CAT":
@@ -1200,7 +1177,7 @@ var charIndex = 0;
 var charMaxIndex = 0;
 var keyLock = true;
 
-var entryMode = 0;   // 0=login, 1=shell, 3=bosskey, 4=security feed, 5=notes
+var entryMode = 0; 
 var pageOffset = 0;
 
 theclip.loadVariables("gdxt.php?what=getid&refid=" + _level0.refid);
