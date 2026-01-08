@@ -1140,6 +1140,7 @@ function processInput1()
                     "CD" +
                     "READ" +
                     "LOGOUT";
+            break;
 
         case "LOGOUT":
         case "BYE":
